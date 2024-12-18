@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golf Guessing Game</title>
+    <div class="nav-links">
+        <a href="index.html">Resume</a> |
+        <a href="scratch.html">Scratch</a> |
+        <a href="#">Game</a>
+    </div>
+    <link rel="stylesheet" href="css/game.css">
+</head>
+
+<body>
+    <div class="game-container">
+        <h1>Golf Guessing Game</h1>
+        <p>Guess the number (1-100) to sink the ball into the hole!</p>
+        <input type="number" id="guess" min="1" max="100" placeholder="1-100">
+        <button id="submit">Swing!</button>
+        <p id="hint"></p>
+        <button id="restart">Play Again</button>
+    </div>
+
+    <script>
+        const targetNumber = Math.floor(Math.random() * 100) + 1;
+        const hint = document.getElementById("hint");
+        const guessInput = document.getElementById("guess");
+        const submitButton = document.getElementById("submit");
+        const restartButton = document.getElementById("restart");
+
+        let attempts = 0;
+
+        submitButton.addEventListener("click", () => {
+            const guess = parseInt(guessInput.value);
+
+            if (!guess || guess < 1 || guess > 100) {
+                hint.textContent = "Please enter a valid number between 1 and 100.";
+                return;
+            }
+
+            attempts++;
+
+            if (guess === targetNumber) {
+                hint.textContent = `Hole-in-one! You sunk it in ${attempts} swing(s)!`;
+                hint.style.color = "#2b7a0b";
+                submitButton.disabled = true;
+                restartButton.style.display = "block";
+            } else if (guess > targetNumber) {
+                hint.textContent = "Too far! Swing lower.";
+                hint.style.color = "#e63946";
+            } else {
+                hint.textContent = "Too short! Swing higher.";
+                hint.style.color = "#e63946";
+            }
+        });
+
+        restartButton.addEventListener("click", () => {
+            window.location.reload();
+        });
+    </script>
+</body>
+
+</html>
